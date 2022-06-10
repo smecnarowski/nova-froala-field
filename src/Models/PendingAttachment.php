@@ -45,8 +45,8 @@ class PendingAttachment extends Model
      */
     public function persist(Froala $field, $model)
     {
-        Attachment::create([
-            'attachable_type' => $model->getMorphClass(),
+        $attachmentModelClassName::create([
+            'attachable_type' => get_class($model),
             'attachable_id' => $model->getKey(),
             'attachment' => $this->attachment,
             'disk' => $field->disk,

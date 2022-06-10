@@ -6,6 +6,7 @@ use Froala\NovaFroalaField\FroalaFieldServiceProvider;
 use Froala\NovaFroalaField\Tests\Fixtures\TestResource;
 use Froala\NovaFroalaField\Tests\Fixtures\TestServiceProvider;
 use Froala\NovaFroalaField\Tests\Fixtures\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Nova;
@@ -79,5 +80,31 @@ abstract class TestCase extends OrchestraTestCase
             $table->string('email');
             $table->string('password');
         });
+    }
+
+    /**
+     * @return string
+     */
+    protected function getAttachmentsTable()
+    {
+        $modelClassName = $this->app['config']->get('nova.froala-field.attachment_model');
+
+        /** @var Model $model */
+        $model = new $modelClassName();
+
+        return $model->getTable();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPendingAttachmentsTable()
+    {
+        $modelClassName = $this->app['config']->get('nova.froala-field.pending_attachment_model');
+
+        /** @var Model $model */
+        $model = new $modelClassName();
+
+        return $model->getTable();
     }
 }
